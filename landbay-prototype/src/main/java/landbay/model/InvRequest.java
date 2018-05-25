@@ -6,7 +6,7 @@ import com.opencsv.bean.CsvBindByPosition;
 /**
  * Models data input from the investmentRequest.csv into Java object
  */
-public class InvestmentRequest {
+public class InvRequest {
 
     @CsvBindByName
     private String investor;
@@ -65,7 +65,7 @@ public class InvestmentRequest {
 
     @Override
     public String toString() {
-        return "InvestmentRequest{" +
+        return "InvRequest{" +
                 "investor='" + investor + '\'' +
                 ", investmentAmount=" + investmentAmount +
                 ", productType='" + productType + '\'' +

@@ -7,9 +7,10 @@ public class MatchedLoan {
 
     int loanId;
     int fullAmount;
-    HashMap<String,Integer> investment; // Investor and how much they invested
+    HashMap<String,Integer> investorList; // Investor and how much they invested
     String type; // FIXED or TRACKER
-    int amountRemaining;
+    int amountRemaining; // starts at full amount
+    boolean fullyFunded = false; // Default of false
 
     public int getLoanId() {
         return loanId;
@@ -19,12 +20,12 @@ public class MatchedLoan {
         this.loanId = loanId;
     }
 
-    public HashMap<String, Integer> getInvestment() {
-        return investment;
+    public HashMap<String, Integer> getInvestorList() {
+        return investorList;
     }
 
-    public void setInvestment(HashMap<String, Integer> investment) {
-        this.investment = investment;
+    public void setInvestorList(HashMap<String, Integer> investorList) {
+        this.investorList = investorList;
     }
 
     public String getType() {
@@ -51,14 +52,23 @@ public class MatchedLoan {
         this.amountRemaining = amountRemaining;
     }
 
+    public boolean isFullyFunded() {
+        return fullyFunded;
+    }
+
+    public void setFullyFunded(boolean fullyFunded) {
+        this.fullyFunded = fullyFunded;
+    }
+
     @Override
     public String toString() {
         return "MatchedLoan{" +
                 "loanId=" + loanId +
                 ", fullAmount=" + fullAmount +
-                ", investment=" + investment +
+                ", investorList=" + investorList +
                 ", type='" + type + '\'' +
                 ", amountRemaining=" + amountRemaining +
+                ", fullyFunded=" + fullyFunded +
                 '}';
     }
 }

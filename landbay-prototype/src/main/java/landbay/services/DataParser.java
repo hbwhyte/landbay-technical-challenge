@@ -1,7 +1,7 @@
 package landbay.services;
 
+import landbay.model.InvRequest;
 import landbay.model.Loan;
-import landbay.model.InvestmentRequest;
 
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
@@ -22,26 +22,26 @@ public class DataParser {
         parseLoans();
     }
 
-    public static List<InvestmentRequest> parseInvestmentRequests() throws IOException {
+    public static List<InvRequest> parseInvestmentRequests() throws IOException {
         String investmentRequestPath = "src/main/resources/inputs/investmentRequests.csv";
-        List<InvestmentRequest> requests;
+        List<InvRequest> requests;
 
         try (Reader reader = Files.newBufferedReader(Paths.get(investmentRequestPath))) {
 
             ColumnPositionMappingStrategy mappingStrategy =
                     new ColumnPositionMappingStrategy();
             //Set mappingStrategy type to Employee Type
-            mappingStrategy.setType(InvestmentRequest.class);
+            mappingStrategy.setType(InvRequest.class);
 
-            CsvToBean<InvestmentRequest> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(InvestmentRequest.class)
+            CsvToBean<InvRequest> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(InvRequest.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
 
             requests = csvToBean.parse();
             setAmountAvailble(requests);
 
-            for (InvestmentRequest request : requests) {
+            for (InvRequest request : requests) {
                 System.out.println("Investor : " + request.getInvestor());
                 System.out.println("Investment Amount : " + request.getInvestmentAmount());
                 System.out.println("Product Type : " + request.getProductType());
@@ -102,8 +102,8 @@ public class DataParser {
         }
     }
 
-    public static void setAmountAvailble(List<InvestmentRequest> rawRequests) {
-        for (InvestmentRequest request : rawRequests) {
+    public static void setAmountAvailble(List<InvRequest> rawRequests) {
+        for (InvRequest request : rawRequests) {
             request.setAmountAvailable(request.getInvestmentAmount());
         }
     }
