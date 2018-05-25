@@ -18,18 +18,9 @@ public class InvestmentRequest {
     private String productType; // could be enum?
 
     @CsvBindByName
-    private int term;
+    private int term; // in months
 
-    // Constructors
-    public InvestmentRequest() {
-    }
-
-    public InvestmentRequest(String investor, int investmentAmount, String productType, int term) {
-        this.investor = investor;
-        this.investmentAmount = investmentAmount;
-        this.productType = productType;
-        this.term = term;
-    }
+    private int amountAvailable;
 
     // Getters & Setters
     public String getInvestor() {
@@ -62,6 +53,14 @@ public class InvestmentRequest {
 
     public void setTerm(int term) {
         this.term = term;
+    }
+
+    public int getAmountAvailable() {
+        return amountAvailable;
+    }
+
+    public void setAmountAvailable(int amountAvailable) {
+        this.amountAvailable = amountAvailable;
     }
 
     @Override

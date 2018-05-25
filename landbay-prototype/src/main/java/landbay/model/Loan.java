@@ -1,27 +1,30 @@
 package landbay.model;
 
+import com.opencsv.bean.CsvBindByName;
+
+import java.util.Date;
+
 /**
  * Models data input from the loans.csv into Java object
  */
 public class Loan {
 
+    @CsvBindByName
     int loanId;
+
+    @CsvBindByName
     int loanAmount; // in pounds
+
+    @CsvBindByName
     String product; // FIXED or TRACKER
+
+    @CsvBindByName
     int term; // in months
+
+    @CsvBindByName
     String completedDate; // dd/MM/yyyy
 
-    // Constructors
-    public Loan() {
-    }
-
-    public Loan(int loanId, int loanAmount, String product, int term, String completedDate) {
-        this.loanId = loanId;
-        this.loanAmount = loanAmount;
-        this.product = product;
-        this.term = term;
-        this.completedDate = completedDate;
-    }
+    Date formattedDate; // formatted for sorting
 
     // Getters & Setters
     public int getLoanId() {
@@ -62,5 +65,13 @@ public class Loan {
 
     public void setCompletedDate(String completedDate) {
         this.completedDate = completedDate;
+    }
+
+    public Date getFormattedDate() {
+        return formattedDate;
+    }
+
+    public void setFormattedDate(Date formattedDate) {
+        this.formattedDate = formattedDate;
     }
 }

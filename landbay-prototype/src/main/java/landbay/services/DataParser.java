@@ -10,11 +10,14 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class DataParser {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         parseInvestmentRequests();
         parseLoans();
     }
@@ -36,19 +39,21 @@ public class DataParser {
                     .build();
 
             requests = csvToBean.parse();
+            setAmountAvailble(requests);
 
             for (InvestmentRequest request : requests) {
                 System.out.println("Investor : " + request.getInvestor());
-                System.out.println("Amount : " + request.getInvestmentAmount());
+                System.out.println("Investment Amount : " + request.getInvestmentAmount());
                 System.out.println("Product Type : " + request.getProductType());
                 System.out.println("Term : " + request.getTerm());
+                System.out.println("Amount available to invest : " + request.getAmountAvailable());
                 System.out.println("==========================");
             }
         }
         return requests;
     }
 
-    private static List<Loan> parseLoans() throws IOException {
+    public static List<Loan> parseLoans() throws IOException, ParseException {
 
         String loanPath = "src/main/resources/inputs/loans.csv";
         List<Loan> loans;
@@ -67,16 +72,39 @@ public class DataParser {
 
             loans = csvToBean.parse();
 
+            formatDate(loans);
+
             for (Loan loan : loans) {
                 System.out.println("Loan Id : " + loan.getLoanId());
                 System.out.println("Loan Amount : " + loan.getLoanAmount());
                 System.out.println("Product Type : " + loan.getProduct());
                 System.out.println("Term : " + loan.getTerm());
                 System.out.println("Completed Date : " + loan.getCompletedDate());
+                System.out.println("Formatted Date : " + loan.getFormattedDate());
                 System.out.println("==========================");
             }
         }
 
         return loans;
+    }
+
+    /**
+     * For each element of the List<Loan>, add the formatted date
+     */
+    public static void formatDate(List<Loan> rawLoans) throws ParseException {
+        for (Loan loan : rawLoans) {
+            // Date format of completedDate
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            //
+            Date formattedDate = simpleDateFormat.parse(loan.getCompletedDate());
+            loan.setFormattedDate(formattedDate);
+        }
+    }
+
+    public static void setAmountAvailble(List<InvestmentRequest> rawRequests) {
+        for (InvestmentRequest request : rawRequests) {
+            request.setAmountAvailable(request.getInvestmentAmount());
+        }
     }
 }
