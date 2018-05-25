@@ -11,7 +11,10 @@ public class Loan {
     int term; // in months
     String completedDate; // dd/MM/yyyy
 
-    // Constructor
+    // Constructors
+    public Loan() {
+    }
+
     public Loan(int loanId, int loanAmount, String product, int term, String completedDate) {
         this.loanId = loanId;
         this.loanAmount = loanAmount;
