@@ -29,9 +29,10 @@ public class LoanMatcher {
      */
     public void match() {
         // Prepare loans to be matched
-        List<MatchedLoan> preppedLoans = loanPreparer();
-        // Parse investment requests of a given type
         DataParser parser = new DataParser();
+        List<Loan> loans = parser.parseLoans();
+        List<MatchedLoan> preppedLoans = loanPreparer(loans);
+        // Parse investment requests of a given type
         List<InvRequest> requests = parser.parseInvestmentRequests();
 
         // Create a list for the results of matched loans
@@ -111,9 +112,7 @@ public class LoanMatcher {
      *
      * @return List of mapped and sorted MatchedLoan objects
      */
-    public List<MatchedLoan> loanPreparer() {
-        DataParser parser = new DataParser();
-        List<Loan> loans = parser.parseLoans();
+    public List<MatchedLoan> loanPreparer(List<Loan> loans) {
         List<MatchedLoan> preppedLoans = new ArrayList<>();
         // Take loans of a given type, and map them to an MatchedLoan object
         for (Loan loan : loans) {

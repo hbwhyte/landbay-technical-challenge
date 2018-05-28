@@ -121,8 +121,9 @@ public class DataParser {
      * for proper sorting & ordering.
      *
      * @param rawLoans List of unprepared Loan objects
+     * @return List of Loan objects
      */
-    private void formatDate(List<Loan> rawLoans) {
+    public List<Loan> formatDate(List<Loan> rawLoans) {
         for (Loan loan : rawLoans) {
             // Date format of completedDate
             String pattern = "dd/MM/yyyy";
@@ -135,6 +136,7 @@ public class DataParser {
                 logger.error("ParseException: Unable to parse date" + e.getMessage());
             }
         }
+        return rawLoans;
     }
 
     /**
