@@ -1,5 +1,6 @@
 package landbay.model;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -14,7 +15,7 @@ public class MatchedLoan {
     String type; // FIXED or TRACKER
     int term;
     int amountRemaining; // Starts at full amount
-    Date completedDate; // Formatted as Date for proper sorting
+    Instant completedDate; // Converted as Instant for proper sorting & time zones
     boolean fullyFunded = false; // Default of false
 
     public int getLoanId() {
@@ -65,11 +66,11 @@ public class MatchedLoan {
         this.amountRemaining = amountRemaining;
     }
 
-    public Date getCompletedDate() {
+    public Instant getCompletedDate() {
         return completedDate;
     }
 
-    public void setCompletedDate(Date completedDate) {
+    public void setCompletedDate(Instant completedDate) {
         this.completedDate = completedDate;
     }
 

@@ -2,7 +2,7 @@ package landbay.model;
 
 import com.opencsv.bean.CsvBindByName;
 
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Models data input from the loans.csv into Java object
@@ -24,7 +24,7 @@ public class Loan {
     @CsvBindByName
     String completedDate; // dd/MM/yyyy
 
-    Date formattedDate; // formatted for sorting
+    Instant convertedDate; // converted for sorting
 
     // Getters & Setters
     public int getLoanId() {
@@ -67,11 +67,11 @@ public class Loan {
         this.completedDate = completedDate;
     }
 
-    public Date getFormattedDate() {
-        return formattedDate;
+    public Instant getConvertedDate() {
+        return convertedDate;
     }
 
-    public void setFormattedDate(Date formattedDate) {
-        this.formattedDate = formattedDate;
+    public void setConvertedDate(Instant convertedDate) {
+        this.convertedDate = convertedDate;
     }
 }

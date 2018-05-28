@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,26 +28,30 @@ public class LoanMatcherTest {
 
     @Test
     public void loanPreparer() {
+        // Create mock Loan object
         Loan mockLoan = new Loan();
         mockLoan.setLoanId(1);
         mockLoan.setLoanAmount(100_000);
         mockLoan.setProduct("FIXED");
         mockLoan.setCompletedDate("01/01/2018");
-        mockLoan.setFormattedDate(new Date(1514739600000L));
+        mockLoan.setConvertedDate(Instant.ofEpochMilli(1514739600000L));
         mockLoan.setTerm(12);
 
+        // Add mock object to List<Loan>
         List<Loan> mockLoanList = new ArrayList<>();
         mockLoanList.add(mockLoan);
 
+        // Crete mock MatchedLoan object
         MatchedLoan mockMatched = new MatchedLoan();
         mockMatched.setLoanId(1);
         mockMatched.setFullAmount(100_000);
         mockMatched.setAmountRemaining(100_000);
         mockMatched.setType("FIXED");
-        mockMatched.setCompletedDate(new Date(1514739600000L));
+        mockMatched.setCompletedDate(Instant.ofEpochMilli(1514739600000L));
         mockMatched.setTerm(12);
         mockMatched.setFullyFunded(false);
 
+        // Run method, and test that each field gets mapped / modified properly
         List<MatchedLoan> test = loanMatcher.loanPreparer(mockLoanList);
         assertEquals(mockMatched.getLoanId(), test.get(0).getLoanId());
         assertEquals(mockMatched.getFullAmount(), test.get(0).getFullAmount());

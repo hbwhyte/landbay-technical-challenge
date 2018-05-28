@@ -16,9 +16,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
+/**
+ * Parses date from CSVs and prepares it for the matching services
+ */
 public class DataParser {
 
     private final Logger logger = LoggerFactory.getLogger(LoanMatcher.class);
@@ -82,7 +85,7 @@ public class DataParser {
             logger.error("IOException: Unable to read file." + e.getStackTrace());
         }
         try {
-            formatDate(loans);
+            convertDate(loans);
         } catch (NullPointerException e) {
             logger.error("NullPointerException: Loans object was empty." + e.getStackTrace());
         }
@@ -117,21 +120,26 @@ public class DataParser {
     }
 
     /**
-     * Takes the dd/MM/yyyy String date from and parses into java.util.Date
+     * Takes the dd/MM/yyyy String date from and parses into java.util.Instant
      * for proper sorting & ordering.
+     *
+     * Instant could be seen as a bit of overkill, but it is useful to ensure that
+     * the order you process loans is still correct & fair regardless of time
+     * zones.
      *
      * @param rawLoans List of unprepared Loan objects
      * @return List of Loan objects
      */
-    public List<Loan> formatDate(List<Loan> rawLoans) {
+    public List<Loan> convertDate(List<Loan> rawLoans) {
         for (Loan loan : rawLoans) {
-            // Date format of completedDate
+            // Date format of completedDate from CSV
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
             // Change string to formatted Date object
             try {
-                Date formattedDate = simpleDateFormat.parse(loan.getCompletedDate());
-                loan.setFormattedDate(formattedDate);
+                Instant convertedDate = simpleDateFormat.parse(loan.getCompletedDate()).toInstant();
+                loan.setConvertedDate(convertedDate);
             } catch (ParseException e) {
                 logger.error("ParseException: Unable to parse date" + e.getMessage());
             }

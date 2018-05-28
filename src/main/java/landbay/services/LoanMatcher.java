@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * Performs the matching logic for loans and investment requests.
+ */
 public class LoanMatcher {
 
     private final Logger logger = LoggerFactory.getLogger(LoanMatcher.class);
@@ -121,7 +124,7 @@ public class LoanMatcher {
             ml.setType(loan.getProduct());
             ml.setTerm(loan.getTerm());
             ml.setFullAmount(loan.getLoanAmount());
-            ml.setCompletedDate(loan.getFormattedDate());
+            ml.setCompletedDate(loan.getConvertedDate());
             ml.setAmountRemaining(loan.getLoanAmount());
             // and to list
             preppedLoans.add(ml);
