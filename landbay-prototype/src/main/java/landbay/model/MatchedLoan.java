@@ -1,5 +1,6 @@
 package landbay.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,7 +10,9 @@ public class MatchedLoan {
     int fullAmount;
     HashMap<String,Integer> investorList; // Investor and how much they invested
     String type; // FIXED or TRACKER
+    int term;
     int amountRemaining; // starts at full amount
+    Date completedDate;
     boolean fullyFunded = false; // Default of false
 
     public int getLoanId() {
@@ -36,6 +39,14 @@ public class MatchedLoan {
         this.type = type;
     }
 
+    public int getTerm() {
+        return term;
+    }
+
+    public void setTerm(int term) {
+        this.term = term;
+    }
+
     public int getFullAmount() {
         return fullAmount;
     }
@@ -50,6 +61,14 @@ public class MatchedLoan {
 
     public void setAmountRemaining(int amountRemaining) {
         this.amountRemaining = amountRemaining;
+    }
+
+    public Date getCompletedDate() {
+        return completedDate;
+    }
+
+    public void setCompletedDate(Date completedDate) {
+        this.completedDate = completedDate;
     }
 
     public boolean isFullyFunded() {
