@@ -8,7 +8,6 @@ import landbay.model.Loan;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,9 +21,15 @@ import java.util.List;
 
 public class DataParser {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoanMatcher.class);
+    private final Logger logger = LoggerFactory.getLogger(LoanMatcher.class);
 
-    public static List<InvRequest> parseInvestmentRequests() {
+    /**
+     * Reads CSV from file from disk using OpenCSV and maps into
+     * a List of InvRequest objects
+     *
+     * @return List of unprepared InvRequest objects
+     */
+    public List<InvRequest> parseInvestmentRequests() {
         String investmentRequestPath = "src/main/resources/inputs/investmentRequests.csv";
         List<InvRequest> requests = null;
 
@@ -42,22 +47,20 @@ public class DataParser {
 
             requests = csvToBean.parse();
             setAmountAvailable(requests);
-//
-//            for (InvRequest request : requests) {
-//                System.out.println("Investor : " + request.getInvestor());
-//                System.out.println("MatchedLoan Amount : " + request.getInvestmentAmount());
-//                System.out.println("Product Type : " + request.getProductType());
-//                System.out.println("Term : " + request.getTerm());
-//                System.out.println("Amount available to invest : " + request.getAmountAvailable());
-//                System.out.println("==========================");
-//            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return requests;
     }
 
-    public static List<Loan> parseLoans() {
+    /**
+     * Reads CSV from file from disk using OpenCSV and maps into
+     * a List of Loan objects
+     *
+     * @return List of unprepared Loan objects
+     */
+    public List<Loan> parseLoans() {
 
         String loanPath = "src/main/resources/inputs/loans.csv";
         List<Loan> loans = null;
@@ -87,7 +90,12 @@ public class DataParser {
         return loans;
     }
 
-    public static void printLoans(List<Loan> loans) {
+    /**
+     * Prints Loans into formatted JSON
+     *
+     * @param loans List of Loan objects
+     */
+    public void printLoans(List<Loan> loans) {
         for (Loan loan : loans) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(loan);
@@ -95,7 +103,12 @@ public class DataParser {
         }
     }
 
-    public static void printRequests(List<InvRequest> requests) {
+    /**
+     * Prints Investment Requests into formatted JSON
+     *
+     * @param requests List of InvRequest objects
+     */
+    public void printRequests(List<InvRequest> requests) {
         for (InvRequest request : requests) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(request);
@@ -104,9 +117,12 @@ public class DataParser {
     }
 
     /**
-     * For each element of the List<Loan>, add the formatted date
+     * Takes the dd/MM/yyyy String date from and parses into java.util.Date
+     * for proper sorting & ordering.
+     *
+     * @param rawLoans List of unprepared Loan objects
      */
-    private static void formatDate(List<Loan> rawLoans) {
+    private void formatDate(List<Loan> rawLoans) {
         for (Loan loan : rawLoans) {
             // Date format of completedDate
             String pattern = "dd/MM/yyyy";
@@ -121,7 +137,13 @@ public class DataParser {
         }
     }
 
-    private static void setAmountAvailable(List<InvRequest> rawRequests) {
+    /**
+     * Sets initial amount available equal to investment full amount, since
+     * amountAvailable is not a given parameter from the CSV
+     *
+     * @param rawRequests List of unprepared InvRequest objects
+     */
+    private void setAmountAvailable(List<InvRequest> rawRequests) {
         for (InvRequest request : rawRequests) {
             request.setAmountAvailable(request.getInvestmentAmount());
         }

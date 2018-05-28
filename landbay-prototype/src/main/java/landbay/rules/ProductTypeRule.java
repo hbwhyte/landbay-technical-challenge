@@ -7,16 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Matching rule ensuring that the investment request term is
- * longer than the loan request.
+ * Matching Rule ensuring that the request and loan product type is the same
  */
-public class TermLengthRule implements MatchingRule {
+public class ProductTypeRule implements MatchingRule {
 
     public List<InvRequest> applyRules(List<InvRequest> requests, MatchedLoan ml) {
         List<InvRequest> qualifiedInvestments = new ArrayList<>();
         for (InvRequest request : requests) {
-            // if loan term is smaller than request term, add to list
-            if (ml.getTerm() < request.getTerm()) {
+            // if loan type is the same as than request type, add to list
+            if (request.getProductType().equalsIgnoreCase(ml.getType())) {
                 qualifiedInvestments.add(request);
             }
         }

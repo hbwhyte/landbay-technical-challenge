@@ -2,17 +2,19 @@ package landbay.model;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
+/**
+ * Custom object for mapping loan/investment matches
+ */
 public class MatchedLoan {
 
     int loanId;
     int fullAmount;
-    HashMap<String,Integer> investorList; // Investor and how much they invested
+    HashMap<String, Integer> investorList; // Investor and how much they invested
     String type; // FIXED or TRACKER
     int term;
-    int amountRemaining; // starts at full amount
-    Date completedDate;
+    int amountRemaining; // Starts at full amount
+    Date completedDate; // Formatted as Date for proper sorting
     boolean fullyFunded = false; // Default of false
 
     public int getLoanId() {

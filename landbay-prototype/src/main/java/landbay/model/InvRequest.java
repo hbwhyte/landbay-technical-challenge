@@ -1,7 +1,6 @@
 package landbay.model;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvBindByPosition;
 
 /**
  * Models data input from the investmentRequest.csv into Java object
@@ -15,12 +14,12 @@ public class InvRequest {
     private int investmentAmount;
 
     @CsvBindByName
-    private String productType; // could be enum?
+    private String productType; // FIXED or TRACKER
 
     @CsvBindByName
     private int term; // in months
 
-    private int amountAvailable;
+    private int amountAvailable; // Added later, starts as same as investmentAmount
 
     // Getters & Setters
     public String getInvestor() {
